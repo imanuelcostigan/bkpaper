@@ -1,0 +1,304 @@
+\documentclass{tufte-handout}
+
+%\geometry{showframe}% for debugging purposes -- displays the margins
+
+\usepackage{amsmath}
+
+% More math symbols
+\usepackage{amssymb}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{A review of Burgard \& Kjaer's Funding strategies, funding costs}
+\author{Imanuel Costigan}
+\date{8 January 2015}  % if the \date{} command is left out, the current date will be used
+
+% The following package makes prettier tables.  We're all about the bling!
+\usepackage{booktabs}
+
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+
+% Small sections of multiple columns
+\usepackage{multicol}
+
+% Provides paragraphs of dummy text
+\usepackage{lipsum}
+
+% Provide robust multi-line equation environment IEEEeqnarray
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+% These commands are used to pretty-print LaTeX commands
+\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
+\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
+\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
+\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
+\newcommand{\docenv}[1]{\textsf{#1}}% environment name
+\newcommand{\docpkg}[1]{\texttt{#1}}% package name
+\newcommand{\doccls}[1]{\texttt{#1}}% document class name
+\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
+
+\begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+\begin{abstract}
+\noindent Burgard \& Kjaer (B\&K) \cite{bkfunding2013up} derive a derivative
+pricing PDE from an issuer's perspective based on a hedging strategy that
+eliminates the issuer's market and counterparty credit risk, but which does not
+necessarily eliminate it's own credit risk. I try to clarify some parts of the
+derivation and insodoing I will highlight one error in it.
+\end{abstract}
+
+\section{Derivation of B\&K PDE}\label{sec:derivation}
+
+\subsection{Background}
+
+A derivative is exposed to the three types of risks:
+
+\begin{enumerate}
+\item market risk associated with the underlying asset $S$
+\item credit risk associated with the default of the counterparty $C$ before the
+derivative's termination date.
+\item credit risk associated with the default of the issuer (say a bank) $B$
+before the derivative's termination date.
+\end{enumerate}
+
+\subsection{Hedging strategy}\label{sec:dynhedging}
+
+B\&K propose the following instruments that will form a
+self-financing, (semi-)replicating hedging strategy associated with the
+derivative as seen from the perspective of $B$ and which will be used to
+specify the PDE that defines the derivative's value, denoted by $\hat{V}$:
+
+\begin{enumerate}
+\item $\delta$ units of the asset $S$ financed by $\beta_S$ units of cash
+from the repo market.
+\item $\alpha_C$ units of the zero-recovery bond $P_C$ issued by $C$ financed
+by $\beta_C$ units of cash from the repo market.
+\item $\alpha_1$ and $\alpha_2$ units of the bonds $P_1$ and $P_2$ issued
+by $B$ which have the recovery rates $R_1$ and $R_2$ respectively where
+without loss of generality, $R_1 < R_2$ ($P_1$ is more junior than $P_2$).
+These bonds are bought back/issued with the hedging strategy's cash
+surplus/shortfall.
+\end{enumerate}
+
+The hedging strategy constituted with these instruments has the value process
+\begin{equation}
+  \Pi^* = \delta S + \beta_S + \alpha_C P_C + \beta_C + \alpha_1 P_1 + \alpha_2 P_2
+\end{equation}
+
+If the derivative belongs to a netting setting supported by a Credit Support
+Annex (CSA), then the derivative will be supported by $X$ units of cash in
+a collateral pool where $X>0$ where the derivative is in-the-money to the issuer.
+The issuer can use $X$ to fund the cash needs of the hedging instruments if
+the collateral can be rehypothecated. As a result, the hedging strategy's value
+process inclusive of collateral, denoted by $\Pi$ is:
+
+\begin{eqnarray}
+  \Pi & = & \Pi^* + X = \delta S + \beta_S + \alpha_C P_C + \beta_C +
+          \alpha_1 P_1 + \alpha_2 P_2 + X \label{eq:pivalue} \\
+  d\Pi & = & \delta dS + d\beta_S + \alpha_C dP_C + d\beta_C +
+          \alpha_1 dP_1 + \alpha_2 dP_2 + dX \label{eq:pidelta}
+\end{eqnarray}
+
+The funding strategy of the asset $S$ and the bond $P_C$ outlined above can be
+represented as:
+
+\begin{eqnarray}
+  \delta S + \beta_S & = & 0 \label{eq:financeS} \\
+  \alpha_C P_C + \beta_C & = & 0 \label{eq:financePC}
+\end{eqnarray}
+
+Substituting (\ref{eq:financeS}) and (\ref{eq:financePC}) into (\ref{eq:pivalue}),
+and using the fact that the hedging strategy replicates the derivative value
+process we find that:
+
+\begin{eqnarray*}
+  \Pi & = & \alpha_1 P_1 + \alpha_2 P_2 + X \\
+      & = & -(\hat{V} - X)
+\end{eqnarray*}
+
+As a result we find the following funding constraint:
+
+\begin{equation}\label{eq:fundingconstraint}
+  \hat{V} - X + \alpha_1 P_1 + \alpha_2 P_2 = 0
+\end{equation}
+
+
+\subsection{Dynamics}\label{sec:dynamics}
+
+B\&K set out the following dynamics for elements of the hedging strategy:
+
+\begin{eqnarray}
+  dS       & = & \mu S dt + \sigma S dW \label{eq:dynstart}\\
+  d\beta_S & = & \delta (\gamma_S - q_S) S dt \\
+  dP_C     & = & r_C P_C dt - P_C dJ_C \\
+  d\beta_C & = &  -\alpha_C q_C P_C dt \\
+  dP_i     & = & r_i P_i dt - \bar{R}_i P_i dJ_B \quad i = 1, 2\\
+  dX       & = & -r_X X dt \label{eq:dynend}
+\end{eqnarray}
+
+Note that:
+
+\begin{enumerate}
+
+\item $\gamma_S$ and $q_S$ denote the dividend income from and financing rate
+for $S$ respectively;
+\item $q_C$ denotes the financing rate for $P_C$;
+\item $J_C$ and $J_B$ are the independent jump processes denoting the default
+of $C$ and $B$ respectively;
+\item B\&K assume that there is zero basis between $r_1$ and $r_2$ so that
+$r_i = r + \hat{R}_i\lambda_B$;
+\item $\bar{R}_i$ denotes the loss on the (pre)-default value of the bond $P_i$
+so that $\bar{R}_i = 1 - R_i$\sidenote{$R_C = 0$ by definition}; and
+\item $r_X$ denotes the rate accruing on the posted collateral $X$.
+\end{enumerate}
+
+When we substitute the dynamics of \ref{eq:dynstart} -- \ref{eq:dynend} into
+\ref{eq:pidelta} and collecting the risk terms associated with $dS$, $dJ_B$ and
+$dJ_C$ as well as the drift terms $dt$ we find that:
+
+\begin{IEEEeqnarray}{rCl}
+  d\Pi & = & \delta dS + d\beta_S + \alpha_C dP_C + d\beta_C +
+          \alpha_1 dP_1 + \alpha_2 dP_2 - dX \nonumber\\
+      & = & \delta dS +
+               \delta (\gamma_S - q_S) S dt +
+               \alpha_C (r_C P_C dt - P_C dJ_C) -\alpha_C q_C P_C dt \nonumber\\
+      & & +\: \alpha_1 (r_1 P_1 dt - \bar{R}_1 P_1 dJ_B) +
+              \alpha_2 (r_2 P_2 dt - \bar{R}_2 P_2 dJ_B) + r_X X dt \nonumber\\
+      & = & \delta dS - \alpha_C P_C dJ_C -
+              (\alpha_1 \bar{R}_1 P_1 + \alpha_2 \bar{R}_2 P_2) dJ_B \nonumber\\
+      & & +\: \left(\delta (\gamma_S - q_S) S + (r_C - q_C) \alpha_C P_C
+              + \alpha_1 r_1 P_1 + \alpha_2 r_2 P_2\right.\nonumber \\
+      & & \quad \left. {} + r_X X\right) dt
+      \label{eq:pideltawithdynamics}
+\end{IEEEeqnarray}
+
+Then using the assumption that $r_1$ and $r_2$ have no basis (see the notes
+above) and denoting $P = \alpha_1 P_1 + \alpha_2 P_2$ and
+$P_D = \alpha R_1 P_1 + \alpha R_2 P_2$ we find that:
+
+\begin{IEEEeqnarray}{rCl}
+  \alpha_1 r_1 P_1 + \alpha_2 r_2 P_2 & = & \alpha_1 (r + \hat{R}_1\lambda_B) P_1 +
+        \alpha_2 (r + \hat{R}_2\lambda_B) P_2 \nonumber \\
+        & = & r P + \lambda_B(P - P_D) \label{eq:p12drifts}
+\end{IEEEeqnarray}
+
+Then, substituting \ref{eq:p12drifts} into \ref{eq:pideltawithdynamics}, we
+find that:
+
+\begin{IEEEeqnarray}{rCl}
+  d\Pi & = & \delta dS - \alpha_C P_C dJ_C - (P - P_D) dJ_B \nonumber\\
+      & & +\: \left(\delta (\gamma_S - q_S) S + (r_C - q_C) \alpha_C P_C \right.\nonumber\\
+      & & \quad \left. {} + r P + \lambda_B(P - P_D) + r_X X\right) dt \label{eq:pideltawithdynamics2}
+\end{IEEEeqnarray}
+
+Note particularly, that the last drift term is $+r_X X dt$ whereas in B\&K's paper
+it is incorrectly written as $-r_X X_t dt$ (see the equation
+(47)\cite{bkfunding2013up}). A positive collateral account \textbf{pays}
+interest at a rate of $r_X$ (cf. \ref{eq:dynend}) and so $-dX = r_X X dt$.
+
+\subsection{PDE}
+
+B\&K present the PDE associated with the derivative's value when exposed
+to counterparty and issuer risk:
+
+\begin{IEEEeqnarray}{rCl}
+  d\hat{V} & = & \partial_t \hat{V} dt + \partial_S \hat{V} dS +
+    \frac{1}{2}\sigma^2 S^2 \partial^2\hat{V_S} dt + \Delta\hat{V}_B dJ_B +
+    \Delta\hat{V}_C dJ_C \nonumber\\
+    & = & \partial_S \hat{V} dS + \Delta\hat{V}_C dJ_C + \Delta\hat{V}_B dJ_B +
+    \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V}\right)dt\label{eq:ito}
+\end{IEEEeqnarray}
+where $\Delta \hat{V}_B = g_B - \hat{V}$, $\Delta \hat{V}_C = g_C - \hat{V}$
+and $g_B$ and $g_C$ denote the close-out values of the derivative when $B$ and
+$C$ default.
+
+\subsection{Net position}
+
+Let's now consider the change in the issuer's net value of the hedging
+portfolio (\ref{eq:pideltawithdynamics2}) and the derivative (\ref{eq:ito}):
+
+
+\begin{IEEEeqnarray}{rCl}
+  d\hat{V} + d\Pi & = & (\partial_S \hat{V} + \delta) dS +
+    (\Delta\hat{V}_C -\alpha_C P_C)dJ_C \nonumber\\
+    & & \:+ (\Delta\hat{V}_B -(P - P_D))dJ_B \nonumber\\
+    & & \:+ \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V}\right.\nonumber\\
+    & & \quad \left. {} + \delta (\gamma_S - q_S) S + (r_C - q_C) \alpha_C P_C \right.\nonumber \\
+    & & \quad \left. {} + r P + \lambda_B(P - P_D) + r_X X\right.\bigg) dt \label{eq:netposition} \\
+    & \triangleq & X dS + Y dJ_C + Z dt
+\end{IEEEeqnarray}
+
+Suppose that the issuer would like to perfectly hedge the P\&L due to variations
+in $S$ or $J_C$. Then from (\ref{eq:netposition}) we can see that this can be
+achieved by holding the following units of $S$ and $P_C$ respectively.
+\sidenote{As there may be restrictions on the issuer's hedging strategy associated with its
+own default, we do not, for the moment, assume that the the issuer wishes to hedge
+its own default risk}
+
+\begin{IEEEeqnarray}{rCl}
+  \delta & = &  -\partial_S \hat{V} \label{eq:s_hedge_ratio}\\
+  \alpha_C & = & \frac{\Delta\hat{V}_C}{P_C} \triangleq
+                 \frac{g_C - \hat{V}}{P_C} \label{eq:pc_hedge_ratio}
+\end{IEEEeqnarray}
+
+When the holdings of $S$ and $P_C$ conform to these
+quantities, $X = Y = 0$, denoting $\lambda_C = r_C - q_C$ and
+$\mathcal{A}_t\hat{V} = \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V} -(\gamma_S - q_S) S \partial_S \hat{V}$
+and using the funding constraint in (\ref{eq:fundingconstraint}) along with the
+notation we introduced earlier for $P$.
+
+\begin{IEEEeqnarray}{rCl}
+  Z dt & = & \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V}
+        -(\gamma_S - q_S) S \partial_S \hat{V} \right.\nonumber\\
+    & & \quad \left. {} + (r_C - q_C) (g_C - \hat{V}) \right.\nonumber \\
+    & & \quad \left. {} + r P + \lambda_B(P - P_D) + r_X X\right.\bigg) dt \nonumber\\
+    & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\\
+    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} - P_D) + r_X X\right) dt \\
+\end{IEEEeqnarray}
+
+Denoting $\epsilon_h = g_B - X + P_D$ we find that:
+
+\begin{IEEEeqnarray}{rCl}
+  d\hat{V} + d\Pi & = & (\Delta\hat{V}_B -(P - P_D))dJ_B \nonumber\\
+    & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\nonumber\\
+    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} - P_D) + r_X X\right) dt \nonumber\\
+    & = &  (g_B - \hat{V} - (X - \hat{V} - P_D))dJ_B \nonumber\\
+    & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\nonumber\\
+    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} - P_D) + r_X X\right) dt \nonumber\\
+    & = & \epsilon_h dJ_B + \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\nonumber\\
+    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} - P_D) + r_X X\right) dt \nonumber \\
+    & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
+    & & \quad \left. {} + \lambda_C g_C - \lambda_B (P_D - X) + (r + r_X) X  \right) + \epsilon_h dJ_B \nonumber\\
+    & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
+    & & \quad \left. {} + \lambda_C g_C - \lambda_B (\epsilon_h - g_B) + (r + r_X) X  \right) + \epsilon_h dJ_B  \nonumber\\
+    & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
+    & & \quad \left. {} + \lambda_C g_C + \lambda_B g_B + (r + r_X) X -\lambda_B\epsilon_h \right) + \epsilon_h dJ_B
+\end{IEEEeqnarray}
+
+For the hedging strategy to perfectly replicate the derivative, we need the
+following conditions to hold:
+\begin{IEEEeqnarray}{rCl}
+  0 & = & \epsilon_h = g_B - X + P_D \\
+  0 & = & \partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \nonumber \\
+    & & \quad + \lambda_C g_C + \lambda_B g_B + (r + r_X) X -\lambda_B\epsilon_h
+\end{IEEEeqnarray}
+
+
+\bibliography{bk}
+\bibliographystyle{plainnat}
+
+
+
+\end{document}
