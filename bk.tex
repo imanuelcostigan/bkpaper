@@ -54,11 +54,12 @@
 \maketitle% this prints the handout title, author, and date
 
 \begin{abstract}
-\noindent Burgard \& Kjaer (B\&K) \cite{bkfunding2013up} derive a derivative
-pricing PDE from an issuer's perspective based on a hedging strategy that
-eliminates the issuer's market and counterparty credit risk, but which does not
-necessarily eliminate it's own credit risk. I try to clarify some parts of the
-derivation and insodoing I will highlight one error in it.
+\noindent Burgard \& Kjaer (B\&K) \cite{bkfunding2013up} develop a derivative
+pricing PDE based on a hedging strategy that eliminates market, counterparty
+credit risk, but which does not necessarily eliminate all own credit risk. I
+review the development of the pricing PDE, suggest some amendments to their
+hedging strategy's specification and highlight an error in their conclusion
+even when using their hedging strategy specification.
 \end{abstract}
 
 \section{Correcting the B\&K PDE}\label{sec:correction}
@@ -68,10 +69,10 @@ derivation and insodoing I will highlight one error in it.
 A derivative is exposed to the three types of risks:
 
 \begin{enumerate}
-\item market risk associated with the underlying asset $S$
-\item credit risk associated with the default of the counterparty $C$ before the
+\item Market risk associated with the underlying asset $S$
+\item Credit risk associated with the default of the counterparty $C$ before the
 derivative's termination date.
-\item credit risk associated with the default of the issuer (say a bank) $B$
+\item Credit risk associated with the default of the issuer (say a bank) $B$
 before the derivative's termination date.
 \end{enumerate}
 
