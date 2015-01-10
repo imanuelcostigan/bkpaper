@@ -79,7 +79,7 @@ before the derivative's termination date.
 \subsection{Hedging strategy}\label{sec:dynhedging}
 
 We can specify a self-financing, replicating\sidenote{Replicating except
-perhaps at issuer default} hedging strategy associated with the
+perhaps at bank default} hedging strategy associated with the
 derivative as seen from the perspective of $B$:
 
 \begin{enumerate}
@@ -100,8 +100,8 @@ The hedging strategy constituted with these instruments has the value process
 
 If the derivative belongs to a netting setting defined by a Credit Support
 Annex (CSA), then the derivative will be supported by $X$ units of cash in
-a collateral pool where $X>0$ where the derivative is in-the-money to the issuer.
-The issuer can use $X$ to fund the cash needs of the hedging instruments if
+a collateral pool where $X>0$ when the derivative is in-the-money to the bank.
+The bank can use $X$ to fund the cash needs of the hedging instruments if
 the collateral can be rehypothecated. As a result, the hedging strategy's value
 process inclusive of collateral, denoted by $\Pi$ is:
 
@@ -213,7 +213,7 @@ find that:
 \subsection{PDE}
 
 As in B\&K, the PDE associated with the derivative's value when exposed to
-counterparty and issuer risk:
+counterparty and bank risk:
 
 \begin{IEEEeqnarray}{rCl}
   d\hat{V} & = & \partial_t \hat{V} dt + \partial_S \hat{V} dS +
@@ -229,7 +229,7 @@ values}.
 
 \subsection{Net position}\label{sec:netposition}
 
-Let's now consider the change in the issuer's net value of the hedging
+Let's now consider the change in the bank's net value of the hedging
 portfolio (\ref{eq:pideltawithdynamics2}) and the derivative (\ref{eq:ito}):
 
 \begin{IEEEeqnarray}{rCl}
@@ -240,11 +240,11 @@ portfolio (\ref{eq:pideltawithdynamics2}) and the derivative (\ref{eq:ito}):
     & \triangleq & X dS + Y_C dJ_C + Y_B dJ_B + Z dt
 \end{IEEEeqnarray}
 
-Suppose that the issuer would like to perfectly hedge the P\&L due to variations
+Suppose that the bank would like to perfectly hedge the P\&L due to variations
 in $S$ or $J_C$. Then from (\ref{eq:netposition}) we can see that this can be
 achieved by holding the following units of $S$ and $P_C$ respectively.
-\sidenote{As there may be restrictions on the issuer's hedging strategy associated with its
-own default, we do not, for the moment, assume that the the issuer wishes to hedge
+\sidenote{As there may be restrictions on the bank's hedging strategy associated with its
+own default, we do not, for the moment, assume that the the bank wishes to hedge
 its own default risk}
 
 \begin{IEEEeqnarray}{rCl}
