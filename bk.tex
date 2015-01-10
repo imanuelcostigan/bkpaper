@@ -57,9 +57,8 @@
 \noindent Burgard \& Kjaer (B\&K) \cite{bkfunding2013up} develop a derivative
 pricing PDE based on a hedging strategy that eliminates market, counterparty
 credit risk, but which does not necessarily eliminate all own credit risk. I
-review the development of the pricing PDE, suggest some amendments to their
-hedging strategy's specification and highlight an error in their conclusion
-even when using their hedging strategy specification.
+will expand on their derivation of a derivative pricing PDE and correct an error
+in it.
 \end{abstract}
 
 \section{Correcting the B\&K PDE}\label{sec:correction}
@@ -102,22 +101,15 @@ If the derivative belongs to a netting setting defined by a Credit Support
 Annex (CSA), then the derivative will be supported by $X$ units of cash in
 a collateral pool where $X>0$ when the derivative is in-the-money to the bank.
 The bank can use $X$ to fund the cash needs of the hedging strategy if
-the collateral can be rehypothecated. As a result, the hedging strategy's value
-process inclusive of collateral, denoted by $\Pi$ is:
+the collateral can be rehypothecated. Let use denote the hedging strategy's value
+proceess inclusive of collateral by $\Pi$. Then,
 
 \begin{eqnarray}
   \Pi & = & \Pi^* + X = \delta S + \beta_S + \alpha_C P_C + \beta_C +
-          \alpha_1 P_1 + \alpha_2 P_2 + X \label{eq:pivalue} \\
+          \alpha_1 P_1 + \alpha_2 P_2 - X \label{eq:pivalue} \\
   d\Pi & = & \delta dS + d\beta_S + \alpha_C dP_C + d\beta_C +
-          \alpha_1 dP_1 + \alpha_2 dP_2 + dX \label{eq:pidelta}
+          \alpha_1 dP_1 + \alpha_2 dP_2 - dX \label{eq:pidelta}
 \end{eqnarray}
-
-Note the specification of this hedging strategy is different to the one
-presented by B\&K. In particular the hedging strategy represented by
-(\ref{eq:pivalue}) contains the term $+X$ rather than $-X$ as in B\&K. As we will
-see, this changes the resulting PDE representation of the derivative's price.\sidenote{
-Even if we use the hedging strategy specified by B\&K, I will demonstrate in a later
-section that it is impossible to arrive at B\&K's PDE.}
 
 The funding strategy of the asset $S$ and the bond $P_C$ outlined above can be
 represented as:
@@ -132,14 +124,14 @@ and using the fact that the hedging strategy replicates the derivative value
 process we find that:
 
 \begin{eqnarray*}
-  \Pi & = & \alpha_1 P_1 + \alpha_2 P_2 + X \\
+  \Pi & = & \alpha_1 P_1 + \alpha_2 P_2 - X \\
       & = & -\hat{V}
 \end{eqnarray*}
 
 As a result we find the following funding constraint:
 
 \begin{equation}\label{eq:fundingconstraint}
-  \hat{V} + X + \alpha_1 P_1 + \alpha_2 P_2 = 0
+  \hat{V} - X + \alpha_1 P_1 + \alpha_2 P_2 = 0
 \end{equation}
 
 \subsection{Dynamics}\label{sec:dynamics}
@@ -177,19 +169,21 @@ $dJ_C$ as well as the drift terms $dt$ we find that:
 
 \begin{IEEEeqnarray}{rCl}
   d\Pi & = & \delta dS + d\beta_S + \alpha_C dP_C + d\beta_C +
-          \alpha_1 dP_1 + \alpha_2 dP_2 + dX \nonumber\\
+          \alpha_1 dP_1 + \alpha_2 dP_2 - dX \nonumber\\
       & = & \delta dS +
                \delta (\gamma_S - q_S) S dt +
                \alpha_C (r_C P_C dt - P_C dJ_C) -\alpha_C q_C P_C dt \nonumber\\
       & & +\: \alpha_1 (r_1 P_1 dt - \bar{R}_1 P_1 dJ_B) +
-              \alpha_2 (r_2 P_2 dt - \bar{R}_2 P_2 dJ_B) - r_X X dt \nonumber\\
+              \alpha_2 (r_2 P_2 dt - \bar{R}_2 P_2 dJ_B) \mathbin{\color{red}+} r_X X dt \nonumber\\
       & = & \delta dS - \alpha_C P_C dJ_C -
               (\alpha_1 \bar{R}_1 P_1 + \alpha_2 \bar{R}_2 P_2) dJ_B \nonumber\\
       & & +\: \left(\delta (\gamma_S - q_S) S + (r_C - q_C) \alpha_C P_C
               + \alpha_1 r_1 P_1 + \alpha_2 r_2 P_2\right.\nonumber \\
-      & & \quad \left. {} - r_X X\right) dt
+      & & \quad \left. {} \mathbin{\color{red}+} r_X X\right) dt
       \label{eq:pideltawithdynamics}
 \end{IEEEeqnarray}
+as $dX = -r_X X dt$ (as per (\ref{eq:dynend})). This is different to the net position expression given by B\&K in equation (47)
+of their working paper\cite{bkfunding2013up} (with the difference highlighted in red).
 
 Then using the assumption that $r_1$ and $r_2$ have no basis (see the notes
 above) and denoting $P = \alpha_1 P_1 + \alpha_2 P_2$ and
@@ -207,7 +201,7 @@ find that:
 \begin{IEEEeqnarray}{rCl}
   d\Pi & = & \delta dS - \alpha_C P_C dJ_C - (P - P_D) dJ_B \nonumber\\
       & & +\: \left(\delta (\gamma_S - q_S) S + (r_C - q_C) \alpha_C P_C \right.\nonumber\\
-      & & \quad \left. {} + r P + \lambda_B(P - P_D) - r_X X\right) dt \label{eq:pideltawithdynamics2}
+      & & \quad \left. {} + r P + \lambda_B(P - P_D) + r_X X\right) dt \label{eq:pideltawithdynamics2}
 \end{IEEEeqnarray}
 
 \subsection{PDE}
@@ -236,7 +230,7 @@ portfolio (\ref{eq:pideltawithdynamics2}) and the derivative (\ref{eq:ito}):
   d\hat{V} + d\Pi & = & (\partial_S \hat{V} + \delta) dS +
     (\Delta\hat{V}_C -\alpha_C P_C)dJ_C + (\Delta\hat{V}_B -(P - P_D))dJ_B\nonumber\\
     & & \:+ \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V} + \delta (\gamma_S - q_S) S \right.\nonumber\\
-    & & \quad \left. {} + (r_C - q_C) \alpha_C P_C + r P + \lambda_B(P - P_D)  - r_X X\right.\bigg) dt \label{eq:netposition} \\
+    & & \quad \left. {} + (r_C - q_C) \alpha_C P_C + r P + \lambda_B(P - P_D)  + r_X X\right.\bigg) dt \label{eq:netposition} \\
     & \triangleq & X dS + Y_C dJ_C + Y_B dJ_B + Z dt
 \end{IEEEeqnarray}
 
@@ -257,91 +251,7 @@ When the holdings of $S$ and $P_C$ conform to these
 quantities, $X = Y = 0$, denoting $\lambda_C = r_C - q_C$ and
 $\mathcal{A}_t\hat{V} = \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V} -(\gamma_S - q_S) S \partial_S \hat{V}$
 and using the funding constraint in (\ref{eq:fundingconstraint}) along with the
-notation we introduced earlier for $P$.
-
-\begin{IEEEeqnarray}{rCl}
-  Z dt & = & \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V}
-        -(\gamma_S - q_S) S \partial_S \hat{V} \right.\nonumber\\
-    & & \quad \left. {} + (r_C - q_C) (g_C - \hat{V}) + r P + \lambda_B(P - P_D) - r_X X\right.\bigg) dt \label{eq:zterm}\\
-    & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \nonumber\right.\\
-    & & \quad \left. {} - r (\hat{V} + X) - \lambda_B(\hat{V} + X + P_D) - r_X X\right) dt\nonumber
-\end{IEEEeqnarray}
-
-Denoting $\tilde{\epsilon}_h = g_B + P_D + X$ we find that:
-
-\begin{IEEEeqnarray}{rCl}
-  d\hat{V} + d\Pi & = & Y_B dJ_B + Z dt \nonumber \\
-  & = & (\Delta\hat{V}_B -(P - P_D))dJ_B \nonumber\\
-    & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \nonumber\right.\\
-    & & \quad \left. {} - r (\hat{V} + X) - \lambda_B(\hat{V} + X + P_D) - r_X X\right) dt\nonumber\\
-    & = &  (g_B - \hat{V} + (\hat{V} + X + P_D))dJ_B \nonumber\\
-    & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \nonumber\right.\\
-    & & \quad \left. {} - r (\hat{V} + X) - \lambda_B(\hat{V} + X + P_D) - r_X X\right) dt\nonumber\\
-    & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
-    & & \quad \left. {} + \lambda_C g_C - \lambda_B P_D - (r + r_X + \lambda_B) X \right) + \tilde{\epsilon}_h dJ_B \nonumber\\
-    & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
-    & & \quad \left. {} + \lambda_C g_C - \lambda_B (\tilde{\epsilon}_h - g_B - X) - (r + r_X + \lambda_B) X \right) + \tilde{\epsilon}_h dJ_B \nonumber\\
-    & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
-    & & \quad \left. {} + \lambda_C g_C + \lambda_B g_B - (r + r_X) X - \lambda_B \tilde{\epsilon}_h \right) + \tilde{\epsilon}_h dJ_B \nonumber
-\end{IEEEeqnarray}
-
-\subsection{Revised PDE representation}
-
-For the hedging strategy to perfectly replicate the derivative, we need the
-following conditions to hold:
-\begin{IEEEeqnarray}{rCl}
-  0 & = & \tilde{\epsilon}_h = g_B + P_D + X \\
-  0 & = & \partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
-    & & \quad \left. {} + \lambda_C g_C + \lambda_B g_B - (r + r_X) X - \lambda_B \tilde{\epsilon}_h
-\end{IEEEeqnarray}
-
-This compares to the PDE presented by B\&K:
-
-\begin{IEEEeqnarray}{rCl}
- 0 & = & \partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \nonumber \\
-    & & \quad + \lambda_C g_C + \lambda_B g_B - (r_X - r) X -\lambda_B\tilde{\epsilon}_h
-\end{IEEEeqnarray}
-where $\tilde{\epsilon}_h = g_B + P_D - X$.
-
-
-\section{Problem with B\&K PDE derivation}\label{sec:problems}
-
-Let's return to my earlier claim that it is impossible to arrive at the
-PDE representation presented by B\&K even if we use the hedging strategy
-they specify. B\&K's hedging portfolio is specified as (I have highlighted
-the difference to my specification in red):
-
-\begin{IEEEeqnarray}{rCl}
-  \Pi & = & \delta S + \beta_S + \alpha_C P_C + \beta_C +
-          \alpha_1 P_1 + \alpha_2 P_2 \mathbin{\color{red}-} X \label{eq:bkpivalue} \\
-  d\Pi & = & \delta dS + d\beta_S + \alpha_C dP_C + d\beta_C +
-          \alpha_1 dP_1 + \alpha_2 dP_2 \mathbin{\color{red}-} dX \label{eq:pbkidelta}
-\end{IEEEeqnarray}
-
-Importantly, the funding constraint (\ref{eq:fundingconstraint}) becomes:
-
-\begin{equation}\label{eq:bkfundingconstraint}
-  \hat{V} - X + \alpha_1 P_1 + \alpha_2 P_2 = 0
-\end{equation}
-
-The PDE remains unchanged from (\ref{eq:ito}) so that following from (\ref{eq:netposition})
-changes in the net position becomes:
-
-\begin{IEEEeqnarray}{rCl}
-  d\hat{V} + d\Pi & = & (\partial_S \hat{V} + \delta) dS +
-    (\Delta\hat{V}_C -\alpha_C P_C)dJ_C \nonumber\\
-    & & \:+ (\Delta\hat{V}_B -(P - P_D))dJ_B \nonumber\\
-    & & \:+ \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V}\right.\nonumber\\
-    & & \quad \left. {} + \delta (\gamma_S - q_S) S + (r_C - q_C) \alpha_C P_C \right.\nonumber \\
-    & & \quad \left. {} + r P + \lambda_B(P - P_D) \mathbin{\color{red}+} r_X X\right.\bigg) dt \label{eq:bknetposition} \\
-    & \triangleq & X dS + Y dJ_C + Z dt
-\end{IEEEeqnarray}
-as $dX = -r_X X dt$ (as per (\ref{eq:dynend})). This is different to the net position expression given by B\&K in equation (47)
-of their working paper\cite{bkfunding2013up} (with the difference highlighted in red).
-
-Using B\&K's funding constraint (\ref{eq:bkfundingconstraint}) and the hedge
-ratios for $S$ (\ref{eq:s_hedge_ratio}) and $P_C$ (\ref{eq:pc_hedge_ratio}) we
-find that:
+notation we introduced earlier for $P$ we find that:
 
 \begin{IEEEeqnarray}{rCl}
   Z dt & = & \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V}
@@ -383,8 +293,7 @@ following conditions to hold:
 The difference between (\ref{eq:bkpdecorrect}) and the one presented by B\&K is
 that the coefficient of $X$ is $r + r_X$ rather than $r_X - r$ (respectively) -
 the latter which would appear to have a more natural explanation. Unfortunately,
-the latter term does not follow from the specified hedging strategy while the former
-is consistent with the alternative hedging strategy specification I outlined above.
+the latter term does not follow from the specified hedging strategy.
 
 \bibliography{bk}
 \bibliographystyle{plainnat}
