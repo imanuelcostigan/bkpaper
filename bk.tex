@@ -202,7 +202,7 @@ $P_D = \alpha R_1 P_1 + \alpha R_2 P_2$ we find that:
         & = & r P + \lambda_B(P - P_D) \label{eq:p12drifts}
 \end{IEEEeqnarray}
 
-Then, substituting \ref{eq:p12drifts} into \ref{eq:pideltawithdynamics}, we
+Then, substituting (\ref{eq:p12drifts}) into (\ref{eq:pideltawithdynamics}), we
 find that:
 
 \begin{IEEEeqnarray}{rCl}
@@ -213,8 +213,8 @@ find that:
 
 \subsection{PDE}
 
-B\&K present the PDE associated with the derivative's value when exposed
-to counterparty and issuer risk:
+As in B\&K, the PDE associated with the derivative's value when exposed to
+counterparty and issuer risk:
 
 \begin{IEEEeqnarray}{rCl}
   d\hat{V} & = & \partial_t \hat{V} dt + \partial_S \hat{V} dS +
@@ -225,13 +225,13 @@ to counterparty and issuer risk:
 \end{IEEEeqnarray}
 where $\Delta \hat{V}_B = g_B - \hat{V}$, $\Delta \hat{V}_C = g_C - \hat{V}$
 and $g_B$ and $g_C$ denote the close-out values of the derivative when $B$ and
-$C$ default.
+$C$ default\sidenote{See B\&Ks paper for what they term "regular" close-out
+values}.
 
 \subsection{Net position}\label{sec:netposition}
 
 Let's now consider the change in the issuer's net value of the hedging
 portfolio (\ref{eq:pideltawithdynamics2}) and the derivative (\ref{eq:ito}):
-
 
 \begin{IEEEeqnarray}{rCl}
   d\hat{V} + d\Pi & = & (\partial_S \hat{V} + \delta) dS +
