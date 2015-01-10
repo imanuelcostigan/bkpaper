@@ -78,11 +78,9 @@ before the derivative's termination date.
 
 \subsection{Hedging strategy}\label{sec:dynhedging}
 
-B\&K propose the following instruments that will form a
-self-financing, replicating\sidenote{Replicating except perhaps at issuer
-default} hedging strategy associated with the
-derivative as seen from the perspective of $B$ and which will be used to
-specify the PDE that defines the derivative's value, denoted by $\hat{V}$:
+We can specify a self-financing, replicating\sidenote{Replicating except
+perhaps at issuer default} hedging strategy associated with the
+derivative as seen from the perspective of $B$:
 
 \begin{enumerate}
 \item $\delta$ units of the asset $S$ financed by $\beta_S$ units of cash
@@ -101,7 +99,7 @@ The hedging strategy constituted with these instruments has the value process
   \Pi^* = \delta S + \beta_S + \alpha_C P_C + \beta_C + \alpha_1 P_1 + \alpha_2 P_2
 \end{equation}
 
-If the derivative belongs to a netting setting supported by a Credit Support
+If the derivative belongs to a netting setting defined by a Credit Support
 Annex (CSA), then the derivative will be supported by $X$ units of cash in
 a collateral pool where $X>0$ where the derivative is in-the-money to the issuer.
 The issuer can use $X$ to fund the cash needs of the hedging instruments if
@@ -116,13 +114,11 @@ process inclusive of collateral, denoted by $\Pi$ is:
 \end{eqnarray}
 
 Note the specification of this hedging strategy is different to the one
-presented by B\&K. In particular the hedging portfolio in (\ref{eq:pivalue})
-contains the term $+X$ rather than $-X$ as in B\&K. This has significant flow on effects
-from here on in as it changes the funding constraint formula in (\ref{eq:fundingconstraint}).
-
-I also note that it is impossible to arrive at the PDE representation presented
-by B\&K even if we use the hedging strategy they specify. I will
-demonstrate this in a later section of this note.
+presented by B\&K. In particular the hedging strategy represented by
+(\ref{eq:pivalue}) contains the term $+X$ rather than $-X$ as in B\&K. As we will
+see, this changes the resulting PDE representation of the derivative's price.
+\sidenote{Even if we use the hedging strategy B\&K specify I will demonstrate in a later
+section that it is impossible to arrive at B\&Ks PDE.}
 
 The funding strategy of the asset $S$ and the bond $P_C$ outlined above can be
 represented as:
