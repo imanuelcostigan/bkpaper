@@ -235,12 +235,10 @@ portfolio (\ref{eq:pideltawithdynamics2}) and the derivative (\ref{eq:ito}):
 
 \begin{IEEEeqnarray}{rCl}
   d\hat{V} + d\Pi & = & (\partial_S \hat{V} + \delta) dS +
-    (\Delta\hat{V}_C -\alpha_C P_C)dJ_C \nonumber\\
-    & & \:+ (\Delta\hat{V}_B -(P - P_D))dJ_B \nonumber\\
-    & & \:+ \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V}\right.\nonumber\\
-    & & \quad \left. {} + \delta (\gamma_S - q_S) S + (r_C - q_C) \alpha_C P_C \right.\nonumber \\
-    & & \quad \left. {} + r P + \lambda_B(P - P_D) - r_X X\right.\bigg) dt \label{eq:netposition} \\
-    & \triangleq & X dS + Y dJ_C + Z dt
+    (\Delta\hat{V}_C -\alpha_C P_C)dJ_C + (\Delta\hat{V}_B -(P - P_D))dJ_B\nonumber\\
+    & & \:+ \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V} + \delta (\gamma_S - q_S) S \right.\nonumber\\
+    & & \quad \left. {} + (r_C - q_C) \alpha_C P_C + r P + \lambda_B(P - P_D)  - r_X X\right.\bigg) dt \label{eq:netposition} \\
+    & \triangleq & X dS + Y_C dJ_C + Y_B dJ_B + Z dt
 \end{IEEEeqnarray}
 
 Suppose that the issuer would like to perfectly hedge the P\&L due to variations
@@ -265,29 +263,27 @@ notation we introduced earlier for $P$.
 \begin{IEEEeqnarray}{rCl}
   Z dt & = & \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V}
         -(\gamma_S - q_S) S \partial_S \hat{V} \right.\nonumber\\
-    & & \quad \left. {} + (r_C - q_C) (g_C - \hat{V}) \right.\nonumber \\
-    & & \quad \left. {} + r P + \lambda_B(P - P_D) - r_X X\right.\bigg) dt \label{eq:zterm}\\
+    & & \quad \left. {} + (r_C - q_C) (g_C - \hat{V}) + r P + \lambda_B(P - P_D) - r_X X\right.\bigg) dt \label{eq:zterm}\\
     & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \nonumber\right.\\
-    & & \quad \left. {} - r \hat{V} - \lambda_B(\hat{V} + P_D) - r_X X\right) dt\nonumber
+    & & \quad \left. {} - r (\hat{V} + X) - \lambda_B(\hat{V} + X + P_D) - r_X X\right) dt\nonumber
 \end{IEEEeqnarray}
 
-Denoting $\tilde{\epsilon}_h = g_B + P_D$ we find that:
+Denoting $\tilde{\epsilon}_h = g_B + P_D + X$ we find that:
 
 \begin{IEEEeqnarray}{rCl}
-  d\hat{V} + d\Pi & = & (\Delta\hat{V}_B -(P - P_D))dJ_B \nonumber\\
-    & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\nonumber\\
-    & & \quad \left. {} - r \hat{V} - \lambda_B(\hat{V} + P_D) - r_X X\right) dt \nonumber\\
-    & = &  (g_B - \hat{V} + (\hat{V} + P_D))dJ_B \nonumber\\
-    & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\nonumber\\
-    & & \quad \left. {} - r \hat{V} - \lambda_B(\hat{V} + P_D) - r_X X\right) dt \nonumber\\
-    & = & \tilde{\epsilon}_h dJ_B + \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\nonumber\\
-    & & \quad \left. {} - r \hat{V} - \lambda_B(\hat{V} + P_D) - r_X X\right) dt \nonumber \\
+  d\hat{V} + d\Pi & = & Y_B dJ_B + Z dt \nonumber \\
+  & = & (\Delta\hat{V}_B -(P - P_D))dJ_B \nonumber\\
+    & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \nonumber\right.\\
+    & & \quad \left. {} - r (\hat{V} + X) - \lambda_B(\hat{V} + X + P_D) - r_X X\right) dt\nonumber\\
+    & = &  (g_B - \hat{V} + (\hat{V} + X + P_D))dJ_B \nonumber\\
+    & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \nonumber\right.\\
+    & & \quad \left. {} - r (\hat{V} + X) - \lambda_B(\hat{V} + X + P_D) - r_X X\right) dt\nonumber\\
     & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
-    & & \quad \left. {} + \lambda_C g_C - \lambda_B P_D - r_X X  \right) + \tilde{\epsilon}_h dJ_B \nonumber\\
+    & & \quad \left. {} + \lambda_C g_C - \lambda_B P_D - (r + r_X + \lambda_B) X \right) + \tilde{\epsilon}_h dJ_B \nonumber\\
     & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
-    & & \quad \left. {} + \lambda_C g_C - \lambda_B (\tilde{\epsilon}_h - g_B) - r_X X  \right) + \tilde{\epsilon}_h dJ_B  \nonumber\\
+    & & \quad \left. {} + \lambda_C g_C - \lambda_B (\tilde{\epsilon}_h - g_B - X) - (r + r_X + \lambda_B) X \right) + \tilde{\epsilon}_h dJ_B \nonumber\\
     & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
-    & & \quad \left. {} + \lambda_C g_C + \lambda_B g_B - r_X X -\lambda_B\tilde{\epsilon}_h \right) + \tilde{\epsilon}_h dJ_B
+    & & \quad \left. {} + \lambda_C g_C + \lambda_B g_B - (r + r_X) X - \lambda_B \tilde{\epsilon}_h \right) + \tilde{\epsilon}_h dJ_B \nonumber
 \end{IEEEeqnarray}
 
 \subsection{Revised PDE}
@@ -295,9 +291,9 @@ Denoting $\tilde{\epsilon}_h = g_B + P_D$ we find that:
 For the hedging strategy to perfectly replicate the derivative, we need the
 following conditions to hold:
 \begin{IEEEeqnarray}{rCl}
-  0 & = & \tilde{\epsilon}_h = g_B + P_D \\
-  0 & = & \partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \nonumber \\
-    & & \quad + \lambda_C g_C + \lambda_B g_B - r_X X -\lambda_B\epsilon_h
+  0 & = & \tilde{\epsilon}_h = g_B + P_D + X \\
+  0 & = & \partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
+    & & \quad \left. {} + \lambda_C g_C + \lambda_B g_B - (r + r_X) X - \lambda_B \tilde{\epsilon}_h
 \end{IEEEeqnarray}
 
 This compares to the PDE presented by B\&K:
@@ -388,7 +384,8 @@ following conditions to hold:
 The difference between (\ref{eq:bkpdecorrect}) and the one presented by B\&K is
 that the coefficient of $X$ is $r + r_X$ rather than $r_X - r$ (respectively) -
 the latter which would appear to have a more natural explanation. Unfortunately,
-the latter term does not follow from the specified hedging strategy.
+the latter term does not follow from the specified hedging strategy while the former
+is consistent with the alternative hedging strategy specification I outlined above.
 
 \bibliography{bk}
 \bibliographystyle{plainnat}
