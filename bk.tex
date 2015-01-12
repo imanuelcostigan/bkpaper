@@ -226,7 +226,7 @@ portfolio (\ref{eq:pideltawithdynamics2}) and the derivative (\ref{eq:ito}):
     (\Delta\hat{V}_C -\alpha_C P_C)dJ_C + (\Delta\hat{V}_B -(P - P_D))dJ_B\nonumber\\
     & & \:+ \left(\partial_t \hat{V} + \frac{1}{2}\sigma^2 S^2 \partial^2_S\hat{V} + \delta (\gamma_S - q_S) S \right.\nonumber\\
     & & \quad \left. {} + (r_C - q_C) \alpha_C P_C + r P + \lambda_B(P - P_D)  + r_X X\right.\bigg) dt \label{eq:netposition} \\
-    & \triangleq & X dS + Y_C dJ_C + Y_B dJ_B + Z dt
+    & \triangleq & \chi dS + Y_C dJ_C + Y_B dJ_B + Z dt
 \end{IEEEeqnarray}
 
 Suppose that the bank would like to perfectly hedge the P\&L due to variations
@@ -286,7 +286,7 @@ following conditions to hold:
 \end{IEEEeqnarray}
 
 The difference between (\ref{eq:bkpdecorrect}) and the one presented by B\&K is
-that the coefficient of $X$ is $r + r_X$ rather than $r_X - r$ (respectively) -
+that the coefficient of $X$ is $+(r + r_X)$ rather than $-(r_X - r)$ (respectively) -
 the latter which would appear to have a more natural explanation. Unfortunately,
 the latter term does not follow from the specified hedging strategy.
 
