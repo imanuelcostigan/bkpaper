@@ -92,11 +92,6 @@ These bonds are bought back/issued with the hedging strategy's cash
 surplus/shortfall.
 \end{enumerate}
 
-The hedging strategy constituted with these instruments has the value process
-\begin{equation}
-  \Pi^* = \delta S + \beta_S + \alpha_C P_C + \beta_C + \alpha_1 P_1 + \alpha_2 P_2
-\end{equation}
-
 If the derivative belongs to a netting setting defined by a Credit Support
 Annex (CSA), then the derivative will be supported by $X$ units of cash in
 a collateral pool where $X>0$ when the derivative is in-the-money to the bank.
@@ -105,7 +100,7 @@ the collateral can be rehypothecated. Let use denote the hedging strategy's valu
 proceess inclusive of collateral by $\Pi$. Then,
 
 \begin{eqnarray}
-  \Pi & = & \Pi^* + X = \delta S + \beta_S + \alpha_C P_C + \beta_C +
+  \Pi & = & \delta S + \beta_S + \alpha_C P_C + \beta_C +
           \alpha_1 P_1 + \alpha_2 P_2 - X \label{eq:pivalue} \\
   d\Pi & = & \delta dS + d\beta_S + \alpha_C dP_C + d\beta_C +
           \alpha_1 dP_1 + \alpha_2 dP_2 - dX \label{eq:pidelta}
