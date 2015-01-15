@@ -182,7 +182,7 @@ of their working paper\cite{bkfunding2013up} (with the difference highlighted in
 
 Then using the assumption that $r_1$ and $r_2$ have no basis (see the notes
 above) and denoting $P = \alpha_1 P_1 + \alpha_2 P_2$ and
-$P_D = \alpha R_1 P_1 + \alpha R_2 P_2$ we find that:
+$P_D = \alpha_1 R_1 P_1 + \alpha_2 R_2 P_2$ we find that:
 
 \begin{IEEEeqnarray}{rCl}
   \alpha_1 r_1 P_1 + \alpha_2 r_2 P_2 & = & \alpha_1 (r + \hat{R}_1\lambda_B) P_1 +
@@ -254,7 +254,7 @@ notation we introduced earlier for $P$ we find that:
     & & \quad \left. {} + (r_C - q_C) (g_C - \hat{V}) \right.\nonumber \\
     & & \quad \left. {} + r P + \lambda_B(P - P_D) + r_X X\right.\bigg) dt \nonumber\\
     & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\\
-    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} + P_D) + r_X X\right) dt
+    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} - P_D) + r_X X\right) dt
 \end{IEEEeqnarray}
 
 And consequently, with $\epsilon_h = g_B + P_D - X$, we find that:
@@ -262,10 +262,10 @@ And consequently, with $\epsilon_h = g_B + P_D - X$, we find that:
 \begin{IEEEeqnarray}{rCl}
   d\hat{V} + d\Pi & = & (\Delta\hat{V}_B -(P - P_D))dJ_B \nonumber\\
     & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\nonumber\\
-    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} + P_D) + r_X X\right) dt \nonumber\\
+    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} - P_D) + r_X X\right) dt \nonumber\\
     & = &  (g_B - \hat{V} - (X - \hat{V} - P_D))dJ_B \nonumber\\
     & & \:+ \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\nonumber\\
-    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} + P_D) + r_X X\right) dt \nonumber\\
+    & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} - P_D) + r_X X\right) dt \nonumber\\
     & = & \epsilon_h dJ_B + \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} + \lambda_C (g_C - \hat{V}) \right.\nonumber\\
     & & \quad \left. {} + r (X - \hat{V}) + \lambda_B(X - \hat{V} - P_D) + r_X X\right) dt \nonumber \\
     & = & \left(\partial_t \hat{V} + \mathcal{A}_t\hat{V} - (r + \lambda_C + \lambda_B) \hat{V} \right. \nonumber \\
